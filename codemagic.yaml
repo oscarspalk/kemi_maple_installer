@@ -1,0 +1,36 @@
+workflows:
+  macOS-publishing-yaml:
+    name: macOS dev build
+    instance_type: mac_mini
+    max_build_duration: 60
+    environment:
+      flutter: 3.7.6
+      xcode: 12.5
+      cocoapods: default
+    scripts:
+      - name: Get Flutter packages
+        script: |
+                    flutter packages pub get
+      - name: Flutter analyze
+        script: |
+                    flutter analyze
+      - name: Install pods
+        script: |
+                    find . -name "Podfile" -execdir pod install \;
+      - name: Build Flutter macOS
+        script: |
+          flutter config --enable-macos-desktop && \
+          flutter build macos --release --build-name=1.0.0 --build-number=1        
+      - name: Package macOS application
+        script: |
+          set -x
+
+          # Command to find the path to your generated app
+          APP_NAME=$(find $(pwd) -name "*.app")
+          cd $(dirname "$APP_NAME")
+          PACKAGE_NAME=$(basename "$APP_NAME" .app).pkg
+
+          # Create an unsigned package
+          xcrun productbuild --component "$APP_NAME" /Applications/ unsigned.pkg         
+    artifacts:
+      - build/macos/**/*.pkg
