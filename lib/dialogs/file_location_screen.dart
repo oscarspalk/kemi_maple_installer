@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:kemi_installer/constants.dart';
@@ -36,6 +34,7 @@ class _FileLocationScreenState extends State<FileLocationScreen> {
       await Downloader.saveTo("$location/data/kemi/kemi.jar", jarBytes);
       List<int> mlaBytes = await Downloader.download(Constants.mlaFileUri);
       await Downloader.saveTo("$location/lib/kemi.mla", mlaBytes);
+      // ignore: use_build_context_synchronously
       showMacosAlertDialog(
         builder: (context) {
           return const SuccesfulFinishAlert();
