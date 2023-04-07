@@ -1,11 +1,10 @@
 workflows:
   macOS-publishing-yaml:
     name: macOS dev build
-    instance_type: mac_mini
     max_build_duration: 60
     environment:
       flutter: 3.7.6
-      xcode: 12.5
+      xcode: 14.3
       cocoapods: default
     scripts:
       - name: Get Flutter packages
