@@ -68,7 +68,11 @@ class _FileLocationScreenState extends State<FileLocationScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(location ?? "Please choose your Maple directory.  "),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                            location ?? "Please choose your Maple directory."),
+                      ),
                       PushButton(
                         buttonSize: ButtonSize.large,
                         onPressed: selectDirectory,
